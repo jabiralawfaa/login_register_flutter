@@ -4,7 +4,6 @@ Aplikasi Flutter sederhana yang menerapkan sistem login dan registrasi dengan pe
 
 ## Daftar Isi
 1. [Pembuatan Proyek](#pembuatan-proyek)
-   - Instalasi Flutter
    - Membuat Proyek Baru
    - Struktur Proyek
 
@@ -16,9 +15,11 @@ Aplikasi Flutter sederhana yang menerapkan sistem login dan registrasi dengan pe
 
 3. [Menjalankan Aplikasi](#menjalankan-aplikasi)
 
-4. [Pengujian](#pengujian)
-
-5. [Deployment](#deployment)
+4. [Latihan](#latihan)
+    - [Validasi Input](#validasi-input)
+    - [Tampilkan atau Sembunyikan Password](#tampilkan-atau-sembunyikan-password)
+    - [Animasi Sederhana](#animasi-sederhana)
+    - [Simpan Sesi Login](#simpan-sesi-login)
 
 ## Pembuatan Proyek
 
@@ -408,7 +409,7 @@ class _LoginPageState extends State<LoginPage> {
 
 ![](/report/5.login-page-dart.png)
 
-## Hasil tampilan
+## Menjalankan Aplikasi
 
 ### Halaman Registrasi
 
@@ -425,6 +426,37 @@ class _LoginPageState extends State<LoginPage> {
 ![](/report/11.tampilan-home.png)
 
 
+## Latihan
 
+### Validasi Input
 
-[Bab-bab selanjutnya akan ditambahkan]
+![](/report/12.Lat1-validasi-input1.png)
+
+![](/report/12.Lat1-validasi-input2.png)
+
+![](/report/12.Lat1-validasi-input3.png)
+
+![](/report/12.Lat1-validasi-input4.png)
+
+### Tampilkan atau Sembunyikan Password
+
+![](/report/13.lat2-lihat-password1.png)
+
+![](/report/13.lat2-lihat-password2.png)
+
+![](/report/13.lat2-lihat-password3.png)
+
+![](/report/13.lat2-lihat-password4.png)
+
+![](/report/13.lat2-lihat-password5.png)
+
+![](/report/13.lat2-lihat-password6.png)
+
+### Animasi Sederhana
+
+![](/report/14.lat3-animasi1.png)
+
+![](/report/14.lat3-animasi2.png)
+
+### Simpan Sesi Login
+

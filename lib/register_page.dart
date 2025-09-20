@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_register/data/user_data.dart';
+import 'package:login_register/utils/input_validator.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -9,14 +10,17 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _obscurePassword = true; // untuk mengontrol visibility password
 
   void _register() {
-    String fullName = _fullNameController.text;
-    String email = _emailController.text;
-    String password = _passwordController.text;
+    if (_formKey.currentState?.validate() ?? false) {
+      String fullName = _fullNameController.text;
+      String email = _emailController.text;
+      String password = _passwordController.text;
 
     if (fullName.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
       userData[email] = {
@@ -56,6 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     }
   }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,37 +76,48 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Icon(Icons.person_add_alt_1, size: 80, color: Colors.white),
-                SizedBox(height: 20),
-                Text(
-                  'Create Account',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Hero(
+                    tag: 'authIcon',
+                    child: Icon(Icons.person_add_alt_1, size: 80, color: Colors.white),
                   ),
-                ),
-                SizedBox(height: 40),
-                TextField(
-                  controller: _fullNameController,
-                  decoration: InputDecoration(
-                    hintText: 'Full Name',
-                    filled: true,
-                    fillColor: Colors.white.withOpacity(0.9),
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
+                  SizedBox(height: 20),
+                  Text(
+                    'Create Account',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                  SizedBox(height: 40),
+                  TextFormField(
+                    controller: _fullNameController,
+                    decoration: InputDecoration(
+                      hintText: 'Full Name',
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.9),
+                      prefixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nama tidak boleh kosong';
+                      }
+                      return null;
+                    },
+                  ),
                 SizedBox(height: 20),
-                TextField(
+                TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
@@ -114,21 +130,34 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderSide: BorderSide.none,
                     ),
                   ),
+                  validator: InputValidator.validateEmail,
                 ),
                 SizedBox(height: 20),
-                TextField(
+                TextFormField(
                   controller: _passwordController,
-                  obscureText: true,
+                  obscureText: _obscurePassword,
                   decoration: InputDecoration(
-                    hintText: 'Password',
+                    hintText: 'Password (min. 6 karakter, 2 huruf kapital)',
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.9),
                     prefixIcon: Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                   ),
+                  validator: InputValidator.validatePassword,
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
@@ -158,6 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
       ),
+      )
     );
   }
 }
